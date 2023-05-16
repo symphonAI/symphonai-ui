@@ -3,7 +3,6 @@ import InteractiveText from "./InteractiveText";
 import GptInput from "./GptInput";
 import Loading from "./Loading";
 import Playlist from "./Playlist";
-import PlaylistGrid from "./playlistGrid/PlaylistGrid";
 
 export default function Dashboard() {
   const [interactiveText, setInteractiveText] = useState(
@@ -11,7 +10,7 @@ export default function Dashboard() {
   );
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
-  const [options, setOptions] =useState([]);
+  const [options, setOptions] = useState([]);
 
   async function fetchData(prompt, temperature) {
     try {
@@ -20,7 +19,12 @@ export default function Dashboard() {
         method: "POST",
         // Add any required headers or body data for the POST request
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ "prompt": prompt, "temperature": temperature, "options": options }),
+        // prettier-ignore
+        body: JSON.stringify({
+          "prompt": prompt,
+          "temperature": temperature,
+          "options": options,
+        }),
       });
       const fetchedData = await response.json();
 
@@ -41,9 +45,7 @@ export default function Dashboard() {
     e.preventDefault();
     setInteractiveText("Loading your results");
 
-    const temperature = (e.target.temperature.value / 100)
-
-    console.log(temperature)
+    const temperature = e.target.temperature.value / 100;
 
     const prompt = e.target.message.value;
     fetchData(prompt, temperature);
@@ -52,24 +54,16 @@ export default function Dashboard() {
   const handleExploreClick = (e) => {
     const clicked = e.target.checked;
     if (clicked) {
-      setOptions(["EXPLORE_MODE"])
+      setOptions(["EXPLORE_MODE"]);
     } else {
-      setOptions([])
+      setOptions([]);
     }
-  }
-
-  const handlePlaylistClick = (e) => {
-    e.preventDefault();
-    const temperature = 0.1
-    setInteractiveText("Loading your results");
-    const { prompt } = e.target.dataset;
-    fetchData(prompt, temperature);
   };
 
   const handleClickClose = () => {
     setData(null);
     setInteractiveText("Let's explore music again");
-  }
+  };
 
   return (
     <div>
@@ -82,10 +76,12 @@ export default function Dashboard() {
           ) : loading ? (
             <Loading />
           ) : (
-            <GptInput onSubmit={handleSubmit} exploreClick={handleExploreClick} />
+            <GptInput
+              onSubmit={handleSubmit}
+              exploreClick={handleExploreClick}
+            />
           )}
         </div>
-        <PlaylistGrid handleClick={handlePlaylistClick} />
       </main>
     </div>
   );
