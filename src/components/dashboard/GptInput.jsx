@@ -22,7 +22,7 @@ export default function GptInput(props) {
         <div className=" mb-4 flex justify-start items-baseline gap-4  ">
           <label
             htmlFor="temperature"
-            className=" text-sm font-medium text-white font-bold "
+            className=" text-base text-white font-bold "
           >
             Randomness
           </label>
