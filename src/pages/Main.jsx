@@ -1,15 +1,13 @@
 import React from "react";
-import Header from "../components/Header";
 import Dashboard from "../components/dashboard/Dashboard";
 
-function App() {
+function Main() {
 
   return (
-    <div className="App">
-      <Header />
+    <div className="Main">
       <Dashboard />
     </div>
   );
 }
 
-export default App;
+export default Main;
