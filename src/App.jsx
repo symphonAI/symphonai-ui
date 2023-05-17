@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import Main from "./pages/Main";
 import AboutUs from "./pages/AboutUs";
 import NoPage from "./pages/NoPage";
-import Header from "./components/Header";
+import Header from "./components/nav/Header";
 
 function App() {
   return (
