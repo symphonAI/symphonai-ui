@@ -1,15 +1,15 @@
 import React from "react";
-import Header from "./components/Header";
-import Dashboard from "./components/dashboard/Dashboard";
-import "./index.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Main from "./pages/Main"
+
 
 function App() {
-
   return (
-    <div className="App">
-      <Header />
-      <Dashboard />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<Main/>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
