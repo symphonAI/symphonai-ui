@@ -11,7 +11,7 @@ export default function Home() {
           musical prompts and combines them with your listening preferences to
           create a playlist for you.
         </p>
-        <a className=" w-fit px-4 py-1 border-white border" href="./login">Try <span className=" font-machina">symphonAI</span></a>
+        <a className=" w-fit px-4 py-1 border-white border" href="./signup">Try <span className=" font-machina">symphonAI</span></a>
       </div>
       {/* <div className=" mr-6 flex-1">Insert Art here</div> */}
     </div>
