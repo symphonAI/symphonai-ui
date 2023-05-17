@@ -1,0 +1,31 @@
+name: SymphonAI UI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.UAT_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.UAT_SECRET_ACCESS_KEY }}
+          aws-region: ap-southeast-2
+      - name: Set Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - name: Install node modules
+        run: npm ci
+      - name: Build deployable artifact
+        run: npm run build
+      - name: Sync S3 Bucket (Deploy to S3)
+        run: aws s3 sync build/ s3://symphon.ai 
