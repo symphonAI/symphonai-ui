@@ -2,11 +2,11 @@ import React from "react";
 
 export default function SignIn() {
   return (
-    <a
+    <button
+    type="button"
       className="hover:underline"
-      href="./signin"
     >
       Sign In
-    </a>
+    </button>
   );
 }

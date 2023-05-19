@@ -13,13 +13,13 @@ export default function Home() {
           musical prompts and combines them with your listening preferences to
           create a playlist for you.
         </p>
-        <a
+        <button
+          type="button"
           className=" w-fit px-4 py-1 flex gap-1 justify-center items-center   border-white border hover:bg-white hover:text-red-950"
-          href="./signup"
         >
           Try <span className=" font-machina">symphonAI</span>
           <ChevronDoubleRightIcon className="h-4 w-4" />
-        </a>
+        </button>
       </div>
       <div className="  hidden md:flex  mr-6 flex-1 justify-center items-center">
         <div className="flex-1  flex justify-center items-center h-screen">
