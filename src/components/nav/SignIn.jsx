@@ -1,7 +1,12 @@
 import React from "react";
 
-export default function SignIn () {
-  return(
-    <a href="./signin">Sign In</a>
-  )
+export default function SignIn() {
+  return (
+    <a
+      className="hover:underline"
+      href="./signin"
+    >
+      Sign In
+    </a>
+  );
 }

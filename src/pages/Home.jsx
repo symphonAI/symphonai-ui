@@ -14,7 +14,7 @@ export default function Home() {
           create a playlist for you.
         </p>
         <a
-          className=" w-fit px-4 py-1 flex gap-1 justify-center items-center  border-white border hover:bg-white hover:text-red-950"
+          className=" w-fit px-4 py-1 flex gap-1 justify-center items-center   border-white border hover:bg-white hover:text-red-950"
           href="./signup"
         >
           Try <span className=" font-machina">symphonAI</span>

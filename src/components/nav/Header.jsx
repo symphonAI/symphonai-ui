@@ -6,7 +6,7 @@ import SignUp from "./SignUp";
 export default function Header() {
   return (
     <nav>
-      <ul className=" flex items-center" >
+      <ul className=" px-4 py-2 flex gap-4 items-center" >
         <li >
           <Logo />
         </li>
