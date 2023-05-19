@@ -1,9 +1,10 @@
 import React from "react";
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
+import mockup from "../image/iphone-mockup.png";
 
 export default function Home() {
   return (
-    <div className=" flex flex-row">
+    <div className=" flex flex-row gap-4">
       <div className=" mt-44 ml-6 flex-1 flex flex-col gap-6">
         <h1 className=" text-6xl font-machina">Introducing symphonAI</h1>
         <p className=" text-2xl">
@@ -20,7 +21,11 @@ export default function Home() {
           <ChevronDoubleRightIcon className="h-4 w-4" />
         </a>
       </div>
-      {/* <div className=" mr-6 flex-1">Insert Art here</div> */}
+      <div className="  hidden md:flex  mr-6 flex-1 justify-center items-center">
+        <div className="flex-1  flex justify-center items-center h-screen">
+          <img className=" block mockup " src={mockup} alt="Iphone mockup" />
+        </div>
+      </div>
     </div>
   );
 }
