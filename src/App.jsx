@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Main from "./pages/Main";
@@ -7,9 +7,29 @@ import NoPage from "./pages/NoPage";
 import Header from "./components/nav/Header";
 
 function App() {
+  const [signIn, setSignIn] = useState(false);
+  const [signUp, setSignUp] = useState(false);
+
+  const handleSignIn = () => {
+    setSignIn(true);
+  };
+
+  const cancelSignIn = () => {
+    setSignIn(false);
+  };
+
+  const handleSignUp = () => {
+    setSignUp(true);
+  };
   return (
     <>
-      <Header />
+      <Header
+        signIn={signIn}
+        signUp={signUp}
+        handleSignIn={handleSignIn}
+        cancelSignIn={cancelSignIn}
+        handleSignUp={handleSignUp}
+      />
       <BrowserRouter>
         <Routes>
           <Route index element={<Home />} />
