@@ -17,14 +17,14 @@ export default function Header(props) {
             <Logo />
           </li>
           <li className=" ml-auto">
-            <SignIn handleSignIn={handleSignIn} />
+            <SignIn handleSignIn={handleSignIn}  />
           </li>
           <li>
             <SignUp handleSignUp={handleSignUp} />
           </li>
         </ul>
       </nav>
-      {signIn ? <SignInModal cancelSignIn={cancelSignIn} /> : <div />}
+      {signIn ? <SignInModal cancelSignIn={cancelSignIn} handleSignUp={handleSignUp} /> : <div />}
       {signUp ? <SignUpModal /> : <div />}
     </>
   );
