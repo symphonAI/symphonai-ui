@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export default function SignInModal(props) {
-  const { cancelSignIn, handleSignUp } = props;
+  const { cancelSignInModal, handleSignUpModal } = props;
   const signUpLink = () => {
-    cancelSignIn();
-    handleSignUp();
+    cancelSignInModal();
+    handleSignUpModal();
   };
   return (
     <div className="h-screen w-screen top-0 flex justify-center items-center fixed bg-black/50">
@@ -23,7 +23,7 @@ export default function SignInModal(props) {
           Sign in with Spotify
         </button>
         <button
-          onClick={cancelSignIn}
+          onClick={cancelSignInModal}
           className="border rounded w-full py-1 hover:bg-white hover:text-red-950"
           type="button"
         >
@@ -45,6 +45,6 @@ export default function SignInModal(props) {
 }
 
 SignInModal.propTypes = {
-  cancelSignIn: PropTypes.func.isRequired,
-  handleSignUp: PropTypes.func.isRequired,
+  cancelSignInModal: PropTypes.func.isRequired,
+  handleSignUpModal: PropTypes.func.isRequired,
 };

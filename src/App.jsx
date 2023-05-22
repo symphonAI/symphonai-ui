@@ -7,28 +7,28 @@ import NoPage from "./pages/NoPage";
 import Header from "./components/nav/Header";
 
 function App() {
-  const [signIn, setSignIn] = useState(false);
-  const [signUp, setSignUp] = useState(false);
+  const [signInModal, setSignInModal] = useState(false);
+  const [signUpModal, setSignUpModal] = useState(false);
 
-  const handleSignIn = () => {
-    setSignIn(true);
+  const handleSignInModal = () => {
+    setSignInModal(true);
   };
 
-  const cancelSignIn = () => {
-    setSignIn(false);
+  const cancelSignInModal = () => {
+    setSignInModal(false);
   };
 
-  const handleSignUp = () => {
-    setSignUp(true);
+  const handleSignUpModal = () => {
+    setSignUpModal(true);
   };
   return (
     <>
       <Header
-        signIn={signIn}
-        signUp={signUp}
-        handleSignIn={handleSignIn}
-        cancelSignIn={cancelSignIn}
-        handleSignUp={handleSignUp}
+        signInModal={signInModal}
+        signUpModal={signUpModal}
+        handleSignInModal={handleSignInModal}
+        cancelSignInModal={cancelSignInModal}
+        handleSignUpModal={handleSignUpModal}
       />
       <BrowserRouter>
         <Routes>
