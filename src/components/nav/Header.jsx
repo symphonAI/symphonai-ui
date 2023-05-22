@@ -7,7 +7,14 @@ import SignInModal from "./modal/SignInModal";
 import SignUpModal from "./modal/SignUpModal";
 
 export default function Header(props) {
-  const { signInModal, signUpModal, handleSignInModal, cancelSignInModal, handleSignUpModal } = props;
+  const {
+    signInModal,
+    signUpModal,
+    handleSignInModal,
+    cancelSignInModal,
+    handleSignUpModal,
+    cancelSignUpModal,
+  } = props;
 
   return (
     <>
@@ -17,15 +24,25 @@ export default function Header(props) {
             <Logo />
           </li>
           <li className=" ml-auto">
-            <SignIn handleSignIn={handleSignInModal}  />
+            <SignIn handleSignIn={handleSignInModal} />
           </li>
           <li>
             <SignUp handleSignUp={handleSignUpModal} />
           </li>
         </ul>
       </nav>
-      {signInModal ? <SignInModal cancelSignInModal={cancelSignInModal} handleSignUpModal={handleSignUpModal} /> : null }
-      {signUpModal ? <SignUpModal /> : null}
+      {signInModal ? (
+        <SignInModal
+          cancelSignInModal={cancelSignInModal}
+          handleSignUpModal={handleSignUpModal}
+        />
+      ) : null}
+      {signUpModal ? (
+        <SignUpModal
+          handleSignInModal={handleSignInModal}
+          cancelSignUpModal={cancelSignUpModal}
+        />
+      ) : null}
     </>
   );
 }
@@ -36,4 +53,5 @@ Header.propTypes = {
   handleSignInModal: PropTypes.func.isRequired,
   cancelSignInModal: PropTypes.func.isRequired,
   handleSignUpModal: PropTypes.func.isRequired,
+  cancelSignUpModal: PropTypes.func.isRequired,
 };

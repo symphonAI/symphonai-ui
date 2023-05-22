@@ -21,6 +21,10 @@ function App() {
   const handleSignUpModal = () => {
     setSignUpModal(true);
   };
+
+  const cancelSignUpModal = () => {
+    setSignUpModal(false);
+  }
   return (
     <>
       <Header
@@ -29,6 +33,7 @@ function App() {
         handleSignInModal={handleSignInModal}
         cancelSignInModal={cancelSignInModal}
         handleSignUpModal={handleSignUpModal}
+        cancelSignUpModal={cancelSignUpModal}
       />
       <BrowserRouter>
         <Routes>
