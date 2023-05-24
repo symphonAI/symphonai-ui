@@ -1,14 +1,17 @@
-import { React, createContext, useContext, useState } from "react";
+import { React, createContext, useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDisplay } from "./DisplayController";
 
 const AuthContext = createContext(null);
 
 export default function AuthProvider({ children }) {
-  const { cancelSignInModal, cancelSignUpModal } = useDisplay();
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [token, setToken] = useState(null);
+
+  const { cancelSignInModal, cancelSignUpModal } = useDisplay();
 
   const fakeAuth = () =>
     new Promise((resolve) => {
@@ -20,21 +23,23 @@ export default function AuthProvider({ children }) {
     setToken(newToken);
     cancelSignInModal();
     cancelSignUpModal();
-    navigate("/main");
+
+    const origin = location.state?.from?.pathname || "/main";
+    navigate(origin);
   };
 
   const handleLogout = () => {
-    console.log("logged out");
     setToken(null);
-    navigate("/");
   };
 
-  // eslint-disable-next-line react/jsx-no-constructed-context-values
-  const value = {
-    token,
-    onLogin: handleLogin,
-    onLogout: handleLogout,
-  };
+  const value = useMemo(
+    () => ({
+      token,
+      onLogin: handleLogin,
+      onLogout: handleLogout,
+    }),
+    [token]
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

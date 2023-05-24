@@ -1,8 +1,10 @@
 import React from "react";
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 import mockup from "../image/iphone-mockup.png";
+import { useDisplay } from "../components/DisplayController";
 
 export default function Home() {
+  const { showSignUpModal } = useDisplay();
   return (
     <div>
       <div className=" flex flex-row gap-4">
@@ -15,6 +17,7 @@ export default function Home() {
             create a playlist for you.
           </p>
           <button
+            onClick={showSignUpModal}
             type="button"
             className=" rounded w-fit px-4 py-1 flex gap-1 justify-center items-center   border-white border hover:bg-white hover:text-red-950"
           >

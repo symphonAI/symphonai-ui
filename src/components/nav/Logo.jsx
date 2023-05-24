@@ -1,9 +1,10 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 export default function Logo () {
   return (
-    <a href="./">
+    <NavLink to="/">
       <div className=" text-white branding">symphonAI</div>
-    </a>
+    </NavLink>
   );
 }

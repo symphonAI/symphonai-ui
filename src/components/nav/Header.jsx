@@ -1,4 +1,5 @@
 import { React } from "react";
+import { NavLink } from "react-router-dom";
 import Logo from "./Logo";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
@@ -6,6 +7,7 @@ import SignInModal from "./modal/SignInModal";
 import SignUpModal from "./modal/SignUpModal";
 import { useAuth } from "../AuthProvider";
 import { useDisplay } from "../DisplayController";
+
 
 export default function Header() {
   const { token, onLogout } = useAuth();
@@ -36,13 +38,15 @@ export default function Header() {
             </li>
           )}
           {token && (
-            <li className="ml-auto">
-              <a href="/main">Dashboard </a>
+            <li className="ml-auto hover:underline">
+              <NavLink to="/main">Dashboard </NavLink>
             </li>
           )}
           {token && (
-            <li>
-              <button onClick={onLogout} type="button">Logout</button>
+            <li className="hover:underline">
+              <button onClick={onLogout} type="button">
+                Logout
+              </button>
             </li>
           )}
         </ul>

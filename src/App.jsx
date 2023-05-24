@@ -7,6 +7,7 @@ import AboutUs from "./pages/AboutUs";
 import NoPage from "./pages/NoPage";
 import Header from "./components/nav/Header";
 import DisplayController from "./components/DisplayController";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -16,7 +17,14 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="main" element={<Main />} />
+            <Route
+              path="main"
+              element={
+                <ProtectedRoute>
+                  <Main />
+                </ProtectedRoute>
+              }
+            />
             <Route path="about-us" element={<AboutUs />} />
             <Route path="*" element={<NoPage />} />
           </Routes>

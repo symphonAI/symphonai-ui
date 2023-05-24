@@ -1,4 +1,4 @@
-import { React, createContext, useContext, useState } from "react";
+import { React, createContext, useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 
 const DisplayContext = createContext(null);
@@ -23,15 +23,17 @@ function DisplayController({ children }) {
     setSignUpModal(false);
   };
 
-  // eslint-disable-next-line react/jsx-no-constructed-context-values
-  const value = {
-    signInModal,
-    signUpModal,
-    showSignInModal,
-    cancelSignInModal,
-    showSignUpModal,
-    cancelSignUpModal,
-  }
+  const value = useMemo(
+    () => ({
+      signInModal,
+      signUpModal,
+      showSignInModal,
+      cancelSignInModal,
+      showSignUpModal,
+      cancelSignUpModal,
+    }),
+    [signInModal, signUpModal]
+  );
 
   return (
     <DisplayContext.Provider value={value}>{children}</DisplayContext.Provider>
@@ -45,5 +47,5 @@ export function useDisplay() {
 }
 
 DisplayController.propTypes = {
-  children: PropTypes.shape.isRequired,
+  children: PropTypes.func.isRequired,
 };
