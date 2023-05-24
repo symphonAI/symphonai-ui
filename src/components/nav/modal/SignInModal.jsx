@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useAuth } from "../../AuthProvider";
 
-export default function SignInModal(props) {
-  const { cancelSignInModal, handleSignUpModal } = props;
+export default function SignInModal({ cancelSignInModal, handleSignUpModal }) {
+  const { onLogin } = useAuth();
   const signUpLink = () => {
     cancelSignInModal();
     handleSignUpModal();
@@ -17,6 +18,7 @@ export default function SignInModal(props) {
           discovering new music with symphonAI{" "}
         </p>
         <button
+          onClick={onLogin}
           className=" mb-2 border rounded w-full py-1 hover:bg-white hover:text-red-950 "
           type="button"
         >

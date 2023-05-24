@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useAuth } from "../../AuthProvider";
 
-export default function SignUpModal(props) {
-  const { handleSignInModal, cancelSignUpModal } = props;
-
+export default function SignUpModal({ handleSignInModal, cancelSignUpModal }) {
+  const { onLogin } = useAuth();
   const signInLink = () => {
     handleSignInModal();
     cancelSignUpModal();
-  }
+  };
 
   return (
     <div className="h-screen w-screen top-0 flex justify-center items-center fixed bg-black/50">
@@ -15,9 +15,11 @@ export default function SignUpModal(props) {
         <div className=" text-white text-center branding">symphonAI</div>
         <h2 className="text-xl font-bold">Hello!</h2>
         <p className=" mb-4">
-          Sign up and link your Spotify account to start discovering new music with the power of symphonAI.
+          Sign up and link your Spotify account to start discovering new music
+          with the power of symphonAI.
         </p>
         <button
+          onClick={onLogin}
           className=" mb-2 border rounded w-full py-1 hover:bg-white hover:text-red-950 "
           type="button"
         >
@@ -31,7 +33,7 @@ export default function SignUpModal(props) {
           Cancel
         </button>
         <p className="text-sm">
-          Already have an account? {" "}
+          Already have an account?{" "}
           <button
             type="button"
             onClick={signInLink}

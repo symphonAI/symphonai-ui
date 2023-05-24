@@ -1,5 +1,6 @@
 import { React, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AuthProvider from "./components/AuthProvider";
 import Home from "./pages/Home";
 import Main from "./pages/Main";
 import AboutUs from "./pages/AboutUs";
@@ -24,26 +25,27 @@ function App() {
 
   const cancelSignUpModal = () => {
     setSignUpModal(false);
-  }
+  };
+
   return (
-    <>
-      <Header
-        signInModal={signInModal}
-        signUpModal={signUpModal}
-        handleSignInModal={handleSignInModal}
-        cancelSignInModal={cancelSignInModal}
-        handleSignUpModal={handleSignUpModal}
-        cancelSignUpModal={cancelSignUpModal}
-      />
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
+        <Header
+          signInModal={signInModal}
+          signUpModal={signUpModal}
+          handleSignInModal={handleSignInModal}
+          cancelSignInModal={cancelSignInModal}
+          handleSignUpModal={handleSignUpModal}
+          cancelSignUpModal={cancelSignUpModal}
+        />
         <Routes>
           <Route index element={<Home />} />
           <Route path="main" element={<Main />} />
           <Route path="about-us" element={<AboutUs />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
-      </BrowserRouter>
-    </>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

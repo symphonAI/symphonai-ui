@@ -5,16 +5,17 @@ import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import SignInModal from "./modal/SignInModal";
 import SignUpModal from "./modal/SignUpModal";
+import { useAuth } from "../AuthProvider";
 
-export default function Header(props) {
-  const {
-    signInModal,
-    signUpModal,
-    handleSignInModal,
-    cancelSignInModal,
-    handleSignUpModal,
-    cancelSignUpModal,
-  } = props;
+export default function Header({
+  signInModal,
+  signUpModal,
+  handleSignInModal,
+  cancelSignInModal,
+  handleSignUpModal,
+  cancelSignUpModal,
+}) {
+  const { token } = useAuth();
 
   return (
     <>
@@ -23,12 +24,17 @@ export default function Header(props) {
           <li>
             <Logo />
           </li>
-          <li className=" ml-auto">
-            <SignIn handleSignIn={handleSignInModal} />
-          </li>
-          <li>
-            <SignUp handleSignUp={handleSignUpModal} />
-          </li>
+          {!token && (
+            <li className=" ml-auto">
+              <SignIn handleSignIn={handleSignInModal} />
+            </li>
+          )}
+          {!token && (
+            <li>
+              <SignUp handleSignUp={handleSignUpModal} />
+            </li>
+          )}
+          {token && <li className="ml-auto"><a href="/main">Dashboard </a></li>}
         </ul>
       </nav>
       {signInModal ? (
