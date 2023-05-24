@@ -1,21 +1,22 @@
 import { React } from "react";
-import PropTypes from "prop-types";
 import Logo from "./Logo";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import SignInModal from "./modal/SignInModal";
 import SignUpModal from "./modal/SignUpModal";
 import { useAuth } from "../AuthProvider";
+import { useDisplay } from "../DisplayController";
 
-export default function Header({
-  signInModal,
-  signUpModal,
-  handleSignInModal,
-  cancelSignInModal,
-  handleSignUpModal,
-  cancelSignUpModal,
-}) {
-  const { token } = useAuth();
+export default function Header() {
+  const { token, onLogout } = useAuth();
+  const {
+    signInModal,
+    signUpModal,
+    showSignInModal,
+    cancelSignInModal,
+    showSignUpModal,
+    cancelSignUpModal,
+  } = useDisplay();
 
   return (
     <>
@@ -26,38 +27,38 @@ export default function Header({
           </li>
           {!token && (
             <li className=" ml-auto">
-              <SignIn handleSignIn={handleSignInModal} />
+              <SignIn handleSignIn={showSignInModal} />
             </li>
           )}
           {!token && (
             <li>
-              <SignUp handleSignUp={handleSignUpModal} />
+              <SignUp handleSignUp={showSignUpModal} />
             </li>
           )}
-          {token && <li className="ml-auto"><a href="/main">Dashboard </a></li>}
+          {token && (
+            <li className="ml-auto">
+              <a href="/main">Dashboard </a>
+            </li>
+          )}
+          {token && (
+            <li>
+              <button onClick={onLogout} type="button">Logout</button>
+            </li>
+          )}
         </ul>
       </nav>
       {signInModal ? (
         <SignInModal
           cancelSignInModal={cancelSignInModal}
-          handleSignUpModal={handleSignUpModal}
+          handleSignUpModal={showSignUpModal}
         />
       ) : null}
       {signUpModal ? (
         <SignUpModal
-          handleSignInModal={handleSignInModal}
+          handleSignInModal={showSignInModal}
           cancelSignUpModal={cancelSignUpModal}
         />
       ) : null}
     </>
   );
 }
-
-Header.propTypes = {
-  signInModal: PropTypes.bool.isRequired,
-  signUpModal: PropTypes.bool.isRequired,
-  handleSignInModal: PropTypes.func.isRequired,
-  cancelSignInModal: PropTypes.func.isRequired,
-  handleSignUpModal: PropTypes.func.isRequired,
-  cancelSignUpModal: PropTypes.func.isRequired,
-};

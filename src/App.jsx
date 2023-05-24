@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AuthProvider from "./components/AuthProvider";
 import Home from "./pages/Home";
@@ -6,45 +6,22 @@ import Main from "./pages/Main";
 import AboutUs from "./pages/AboutUs";
 import NoPage from "./pages/NoPage";
 import Header from "./components/nav/Header";
+import DisplayController from "./components/DisplayController";
 
 function App() {
-  const [signInModal, setSignInModal] = useState(false);
-  const [signUpModal, setSignUpModal] = useState(false);
-
-  const handleSignInModal = () => {
-    setSignInModal(true);
-  };
-
-  const cancelSignInModal = () => {
-    setSignInModal(false);
-  };
-
-  const handleSignUpModal = () => {
-    setSignUpModal(true);
-  };
-
-  const cancelSignUpModal = () => {
-    setSignUpModal(false);
-  };
-
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <Header
-          signInModal={signInModal}
-          signUpModal={signUpModal}
-          handleSignInModal={handleSignInModal}
-          cancelSignInModal={cancelSignInModal}
-          handleSignUpModal={handleSignUpModal}
-          cancelSignUpModal={cancelSignUpModal}
-        />
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path="main" element={<Main />} />
-          <Route path="about-us" element={<AboutUs />} />
-          <Route path="*" element={<NoPage />} />
-        </Routes>
-      </AuthProvider>
+      <DisplayController>
+        <AuthProvider>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="main" element={<Main />} />
+            <Route path="about-us" element={<AboutUs />} />
+            <Route path="*" element={<NoPage />} />
+          </Routes>
+        </AuthProvider>
+      </DisplayController>
     </BrowserRouter>
   );
 }

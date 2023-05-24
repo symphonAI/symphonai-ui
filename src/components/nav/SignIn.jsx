@@ -1,15 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { useDisplay } from "../DisplayController";
 
-export default function SignIn(props) {
-  const { handleSignIn } = props;
+export default function SignIn() {
+  const { showSignInModal} = useDisplay()
   return (
-    <button onClick={handleSignIn} type="button" className="hover:underline">
+    <button onClick={showSignInModal} type="button" className="hover:underline">
       Sign In
     </button>
   );
 }
-
-SignIn.propTypes = {
-  handleSignIn: PropTypes.func.isRequired,
-};
