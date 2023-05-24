@@ -8,7 +8,6 @@ import SignUpModal from "./modal/SignUpModal";
 import { useAuth } from "../AuthProvider";
 import { useDisplay } from "../DisplayController";
 
-
 export default function Header() {
   const { token, onLogout } = useAuth();
   const {
@@ -51,18 +50,18 @@ export default function Header() {
           )}
         </ul>
       </nav>
-      {signInModal ? (
+      {signInModal && (
         <SignInModal
           cancelSignInModal={cancelSignInModal}
           handleSignUpModal={showSignUpModal}
         />
-      ) : null}
-      {signUpModal ? (
+      )}
+      {signUpModal && (
         <SignUpModal
           handleSignInModal={showSignInModal}
           cancelSignUpModal={cancelSignUpModal}
         />
-      ) : null}
+      )}
     </>
   );
 }
