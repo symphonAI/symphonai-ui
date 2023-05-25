@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const AuthContext = createContext(null);
 
-// Hi Squid, plz replace with your own Client ID
+// LOOK HERE Hi Squid, plz replace with your own Spotify Client ID
 const CLIENT_ID = "ab28c6fb282b46608c95dc39fa5c95b0";
 
 export default function AuthProvider({ children }) {
