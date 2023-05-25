@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useAuth } from "../../AuthProvider";
 
 export default function SignUpModal({ handleSignInModal, cancelSignUpModal }) {
-  const { onLogin } = useAuth();
+  const { onSignUp } = useAuth();
   const signInLink = () => {
     handleSignInModal();
     cancelSignUpModal();
@@ -19,7 +19,7 @@ export default function SignUpModal({ handleSignInModal, cancelSignUpModal }) {
           with the power of symphonAI.
         </p>
         <button
-          onClick={onLogin}
+          onClick={onSignUp}
           className=" mb-2 border rounded w-full py-1 hover:bg-white hover:text-red-950 "
           type="button"
         >

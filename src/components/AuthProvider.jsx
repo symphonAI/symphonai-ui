@@ -22,6 +22,14 @@ export default function AuthProvider({ children }) {
     const newToken = await fakeAuth();
     setToken(newToken);
     cancelSignInModal();
+
+    const origin = location.state?.from?.pathname || "/main";
+    navigate(origin);
+  };
+
+  const handleSignUp = async () => {
+    const newToken = await fakeAuth();
+    setToken(newToken);
     cancelSignUpModal();
 
     const origin = location.state?.from?.pathname || "/main";
@@ -36,6 +44,7 @@ export default function AuthProvider({ children }) {
     () => ({
       token,
       onLogin: handleLogin,
+      onSignUp: handleSignUp,
       onLogout: handleLogout,
     }),
     [token]
