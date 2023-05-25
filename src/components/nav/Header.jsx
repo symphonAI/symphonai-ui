@@ -2,7 +2,6 @@ import { React } from "react";
 import { NavLink } from "react-router-dom";
 import Logo from "./Logo";
 import SignIn from "./SignIn";
-import SignUp from "./SignUp";
 import SignInModal from "./modal/SignInModal";
 import SignUpModal from "./modal/SignUpModal";
 import { useAuth } from "../AuthProvider";
@@ -31,11 +30,7 @@ export default function Header() {
               <SignIn handleSignIn={showSignInModal} />
             </li>
           )}
-          {!token && (
-            <li>
-              <SignUp handleSignUp={showSignUpModal} />
-            </li>
-          )}
+
           {token && (
             <li className="ml-auto hover:underline">
               <NavLink to="/main">Dashboard </NavLink>
