@@ -1,31 +1,54 @@
 import { React, createContext, useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useDisplay } from "./DisplayController";
+// import { useDisplay } from "./DisplayController";
 
 const AuthContext = createContext(null);
 
+// Hi Squid, plz replace with your own Client ID
+const CLIENT_ID = "ab28c6fb282b46608c95dc39fa5c95b0";
+
 export default function AuthProvider({ children }) {
-  const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
 
   const [token, setToken] = useState(null);
 
-  const { cancelSignInModal, cancelSignUpModal } = useDisplay();
+  // const { cancelSignInModal, cancelSignUpModal } = useDisplay();
 
-  const fakeAuth = () =>
-    new Promise((resolve) => {
-      setTimeout(() => resolve("2342f2f1d131rf12"), 250);
-    });
+  function generateRandomString(length) {
+    let text = "";
+    const possible =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (let i = 0; i < length; i += 1) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+  }
 
   const handleLogin = async () => {
-    const newToken = await fakeAuth();
-    setToken(newToken);
-    cancelSignInModal();
-    cancelSignUpModal();
+    const scopes = [
+      "user-top-read",
+      "playlist-modify-public",
+      "user-read-private",
+      "user-read-email",
+    ];
+    const redirectUri = "http://localhost:8080/callback";
+    const clientId = CLIENT_ID;
+    const state = generateRandomString(16);
 
-    const origin = location.state?.from?.pathname || "/main";
-    navigate(origin);
+    const authorizationUrl = `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${scopes.join(
+      "%20"
+    )}&redirect_uri=${redirectUri}&state=${state}`;
+
+    // Make the user login with Spotify
+    window.location.href = authorizationUrl;
+
+    // setToken(newToken);
+    // cancelSignInModal();
+    // cancelSignUpModal();
+
+    // const origin = location.state?.from?.pathname || "/main";
+    // navigate(origin);
   };
 
   const handleLogout = () => {
