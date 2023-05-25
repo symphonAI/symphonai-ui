@@ -59,6 +59,7 @@ export default function AuthProvider({ children }) {
     () => ({
       token,
       onLogin: handleLogin,
+      // onSignUp: handleSignUp,
       onLogout: handleLogout,
     }),
     [token]
