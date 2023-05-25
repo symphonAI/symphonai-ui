@@ -11,7 +11,7 @@ export default function AuthProvider({ children }) {
 
   const [token, setToken] = useState(null);
 
-  const { cancelSignInModal, cancelSignUpModal } = useDisplay();
+  const { cancelSignInModal } = useDisplay();
 
   const fakeAuth = () =>
     new Promise((resolve) => {
@@ -27,15 +27,6 @@ export default function AuthProvider({ children }) {
     navigate(origin);
   };
 
-  const handleSignUp = async () => {
-    const newToken = await fakeAuth();
-    setToken(newToken);
-    cancelSignUpModal();
-
-    const origin = location.state?.from?.pathname || "/main";
-    navigate(origin);
-  };
-
   const handleLogout = () => {
     setToken(null);
   };
@@ -44,7 +35,6 @@ export default function AuthProvider({ children }) {
     () => ({
       token,
       onLogin: handleLogin,
-      onSignUp: handleSignUp,
       onLogout: handleLogout,
     }),
     [token]
