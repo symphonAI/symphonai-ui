@@ -1,6 +1,5 @@
 import { React, createContext, useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
 // import { useDisplay } from "./DisplayController";
 
 const AuthContext = createContext(null);
@@ -9,7 +8,6 @@ const AuthContext = createContext(null);
 const CLIENT_ID = "9a8c581b641f4dde912dbac93122660a";
 
 export default function AuthProvider({ children }) {
-  const navigate = useNavigate();
   // const location = useLocation();
 
   const [token, setToken] = useState(null);
@@ -55,9 +53,8 @@ export default function AuthProvider({ children }) {
 
   const handleCallback = (newToken) => {
     if (newToken) {
-      localStorage.setItem("token", newToken);
+      // localStorage.setItem("token", newToken);
       setToken(newToken);
-      navigate("/main");
     } else {
       console.error("Access token not found");
     }

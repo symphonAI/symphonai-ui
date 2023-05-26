@@ -13,14 +13,14 @@ function Callback() {
 
     if (accessToken) {
       // Handle the access token on the frontend
-      console.log("Access Token:", accessToken);
       onCallback(accessToken);
+      navigate("/main");
     } else {
       console.error("Access token not found");
       // Handle the case when the access token is missing or invalid
       // For example, redirect to an error page or display an error message
     }
-  }, [location, navigate]);
+  }, []);
 
   return null; // Render nothing or a loading indicator since this component handles the logic internally
 }
