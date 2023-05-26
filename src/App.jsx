@@ -8,6 +8,7 @@ import NoPage from "./pages/NoPage";
 import Header from "./components/nav/Header";
 import DisplayController from "./components/DisplayController";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Callback from "./components/Callback";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route path="callback" element={<Callback />} />
             <Route path="about-us" element={<AboutUs />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
