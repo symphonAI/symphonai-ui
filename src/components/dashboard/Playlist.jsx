@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export default function Playlist(props) {
-  const { data, clickClose } = props;
+export default function Playlist({ data, clickClose }) {
+  console.log(data);
   let { requestUri } = data;
   requestUri = requestUri.replace("spotify:playlist:", "");
 
@@ -46,6 +46,6 @@ export default function Playlist(props) {
 }
 
 Playlist.propTypes = {
-  data: PropTypes.string.isRequired,
+  data: PropTypes.shape.isRequired,
   clickClose: PropTypes.func.isRequired
 };
