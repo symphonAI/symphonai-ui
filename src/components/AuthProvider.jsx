@@ -56,7 +56,7 @@ export default function AuthProvider({ children }) {
       // localStorage.setItem("token", newToken);
       setToken(newToken);
     } else {
-      console.error("Access token not found");
+      // console.error("Access token not found");
     }
   };
 

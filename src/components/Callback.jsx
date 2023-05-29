@@ -16,7 +16,7 @@ function Callback() {
       onCallback(accessToken);
       navigate("/main");
     } else {
-      console.error("Access token not found");
+      // console.error("Access token not found");
       // Handle the case when the access token is missing or invalid
       // For example, redirect to an error page or display an error message
     }
