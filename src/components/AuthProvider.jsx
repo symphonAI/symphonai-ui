@@ -32,7 +32,7 @@ export default function AuthProvider({ children }) {
       "user-read-private",
       "user-read-email",
     ];
-    const redirectUri = "https://api.symphon.ai/callback";
+    const redirectUri = "http://localhost:8080/callback";
     const clientId = CLIENT_ID;
     const state = generateRandomString(16);
 
