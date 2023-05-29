@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-export default function GptInput(props) {
+export default function GptInput({ onSubmit, exploreClick }) {
   const [temperature, setTemperature] = useState(10);
   const updateTemperature = (e) => {
     setTemperature(e.target.value);
   };
 
-  const { onSubmit, exploreClick } = props;
   return (
     <div className="flex-auto w-80">
       <form action="" onSubmit={onSubmit}>

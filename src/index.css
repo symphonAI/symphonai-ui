@@ -42,3 +42,11 @@ body {
 .card-header {
   background-color: rgba(0,0,0,0.5)
 }
+
+.mockup {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  min-height: 400px;
+  max-height: 700px;
+}

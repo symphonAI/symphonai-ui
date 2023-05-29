@@ -3,6 +3,7 @@ import InteractiveText from "./InteractiveText";
 import GptInput from "./GptInput";
 import Loading from "./Loading";
 import Playlist from "./Playlist";
+import { useAuth } from "../AuthProvider";
 
 export default function Dashboard() {
   const [interactiveText, setInteractiveText] = useState(
@@ -11,11 +12,12 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
   const [options, setOptions] = useState([]);
+  const { token } = useAuth();
 
   async function fetchData(prompt, temperature) {
     try {
       setLoading(true);
-      const response = await fetch("http://api.symphonai.net/chatgpt/prompt", {
+      const response = await fetch("https://api.symphon.ai/chatgpt/prompt", {
         method: "POST",
         // Add any required headers or body data for the POST request
         headers: { "Content-Type": "application/json" },
@@ -24,6 +26,7 @@ export default function Dashboard() {
           "prompt": prompt,
           "temperature": temperature,
           "options": options,
+          "accessToken": token,
         }),
       });
       const fetchedData = await response.json();
