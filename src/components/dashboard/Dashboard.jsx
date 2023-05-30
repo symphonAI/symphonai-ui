@@ -17,7 +17,7 @@ export default function Dashboard() {
   async function fetchData(prompt, temperature) {
     try {
       setLoading(true);
-      const response = await fetch("http://api.symphon.ai/chatgpt/prompt", {
+      const response = await fetch("http://localhost:8080/chatgpt/prompt", {
         method: "POST",
         // Add any required headers or body data for the POST request
         headers: { "Content-Type": "application/json" },
