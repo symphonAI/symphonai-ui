@@ -7,6 +7,7 @@ const AuthContext = createContext(null);
 export default function AuthProvider({ children }) {
   // const location = useLocation();
 
+  // eslint-disable-next-line no-console
   console.log("Env vars (debug only):", process.env);
 
   const [token, setToken] = useState(null);
