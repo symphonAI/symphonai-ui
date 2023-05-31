@@ -4,11 +4,10 @@ import PropTypes from "prop-types";
 
 const AuthContext = createContext(null);
 
-// LOOK HERE Hi Squid, plz replace with your own Spotify Client ID
-const CLIENT_ID = "9a8c581b641f4dde912dbac93122660a";
-
 export default function AuthProvider({ children }) {
   // const location = useLocation();
+
+  console.log("Env vars (debug only):", process.env);
 
   const [token, setToken] = useState(null);
 
@@ -32,8 +31,8 @@ export default function AuthProvider({ children }) {
       "user-read-private",
       "user-read-email",
     ];
-    const redirectUri = "http://localhost:8080/callback";
-    const clientId = CLIENT_ID;
+    const redirectUri = `${process.env.REACT_APP_SYMPHONAI_API_BASE_URL}/callback`;
+    const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
     const state = generateRandomString(16);
 
     const authorizationUrl = `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${scopes.join(

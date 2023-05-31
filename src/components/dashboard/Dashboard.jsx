@@ -17,18 +17,21 @@ export default function Dashboard() {
   async function fetchData(prompt, temperature) {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:8080/chatgpt/prompt", {
-        method: "POST",
-        // Add any required headers or body data for the POST request
-        headers: { "Content-Type": "application/json" },
-        // prettier-ignore
-        body: JSON.stringify({
+      const response = await fetch(
+        `${process.env.REACT_APP_SYMPHONAI_BASE_URL}/chatgpt/prompt`,
+        {
+          method: "POST",
+          // Add any required headers or body data for the POST request
+          headers: { "Content-Type": "application/json" },
+          // prettier-ignore
+          body: JSON.stringify({
           "prompt": prompt,
           "temperature": temperature,
           "options": options,
           "accessToken": token,
         }),
-      });
+        }
+      );
       const fetchedData = await response.json();
 
       setLoading(false);
