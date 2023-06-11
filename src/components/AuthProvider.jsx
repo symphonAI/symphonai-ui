@@ -1,13 +1,16 @@
-import { React, createContext, useContext, useMemo, useState } from "react";
+import { React, createContext, useContext, useMemo } from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
+import useLocalStorage from "../hooks/useLocalStorage";
 // import { useDisplay } from "./DisplayController";
 
 const AuthContext = createContext(null);
 
 export default function AuthProvider({ children }) {
   // const location = useLocation();
+  const navigate = useNavigate();
 
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useLocalStorage("jwt", "");
 
   // const { cancelSignInModal, cancelSignUpModal } = useDisplay();
 
@@ -39,45 +42,34 @@ export default function AuthProvider({ children }) {
 
     // Make the user login with Spotify
     window.location.href = authorizationUrl;
-
-    // setToken(newToken);
-    // cancelSignInModal();
-    // cancelSignUpModal();
-
-    // const origin = location.state?.from?.pathname || "/main";
-    // navigate(origin);
   };
 
-  const handleCallback = async (data) => {
+  const handleCallback = (data) => {
     // eslint-disable-next-line no-unused-vars
     const [_key, authCode] = data.queryKey;
     console.log("Auth code:", authCode);
     if (authCode) {
-      // localStorage.setItem("token", newToken);
-      fetch(`${process.env.REACT_APP_SYMPHONAI_API_BASE_URL}/signup`, {
+      return fetch(`${process.env.REACT_APP_SYMPHONAI_API_BASE_URL}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ code: authCode }),
       })
-        .then((response) => response.json())
-        .then((responseData) => {
-          console.log("Response data:", responseData);
-          // Continue with further processing or actions based on the "code" value
-          setToken(responseData);
-          return responseData;
+        .then((response) => response.text())
+        .then((jwt) => {
+          setToken(jwt);
+          navigate("/main");
         })
         .catch((error) => {
           console.error("Error:", error);
         });
-    } else {
-      // console.error("Access token not found");
     }
+    return null;
   };
 
   const handleLogout = () => {
-    setToken(null);
+    setToken("");
   };
 
   const value = useMemo(

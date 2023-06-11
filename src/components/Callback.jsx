@@ -1,24 +1,23 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 import { useAuth } from "./AuthProvider";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 function Callback() {
   const location = useLocation();
-  const navigate = useNavigate();
   const { onCallback } = useAuth();
+
+  // eslint-disable-next-line no-unused-vars
+  const [token, setToken] = useLocalStorage("jwt", "");
 
   const searchParams = new URLSearchParams(location.search);
   const code = searchParams.get("code");
 
-  const { isLoading, isError, data } = useQuery(
-    ["onCallback", code],
-    onCallback,
-    {
-      enabled: !!code, // Only enable the query when code is present
-      retry: false, // Disable automatic retries
-    }
-  );
+  const { isLoading, isError } = useQuery(["onCallback", code], onCallback, {
+    enabled: !!code, // Only enable the query when code is present
+    retry: false, // Disable automatic retries
+  });
 
   if (isLoading) {
     // Render a loading state while the API call is in progress
@@ -28,10 +27,6 @@ function Callback() {
   if (isError) {
     // Handle the error state
     return <div>Error fetching data</div>;
-  }
-
-  if (data) {
-    navigate("/main");
   }
 
   // Render your component using the retrieved data

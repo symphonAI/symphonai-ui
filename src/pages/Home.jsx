@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 import mockup from "../image/iphone-mockup.png";
 import { useDisplay } from "../components/DisplayController";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 export default function Home() {
+  const [jwt] = useLocalStorage("jwt", "");
+
+  const navigate = useNavigate("/main");
+
+  useEffect(() => {
+    console.log("Checking the JWT:", jwt);
+    if (jwt) {
+      navigate("/main");
+    }
+  });
+
   const { showSignInModal } = useDisplay();
 
   return (
