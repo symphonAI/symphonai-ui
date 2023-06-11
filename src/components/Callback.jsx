@@ -2,14 +2,10 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 import { useAuth } from "./AuthProvider";
-import useLocalStorage from "../hooks/useLocalStorage";
 
 function Callback() {
   const location = useLocation();
   const { onCallback } = useAuth();
-
-  // eslint-disable-next-line no-unused-vars
-  const [token, setToken] = useLocalStorage("jwt", "");
 
   const searchParams = new URLSearchParams(location.search);
   const code = searchParams.get("code");

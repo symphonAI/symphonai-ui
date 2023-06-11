@@ -45,9 +45,7 @@ export default function AuthProvider({ children }) {
   };
 
   const handleCallback = (data) => {
-    // eslint-disable-next-line no-unused-vars
-    const [_key, authCode] = data.queryKey;
-    console.log("Auth code:", authCode);
+    const [, authCode] = data.queryKey;
     if (authCode) {
       return fetch(`${process.env.REACT_APP_SYMPHONAI_API_BASE_URL}/signup`, {
         method: "POST",
@@ -63,6 +61,8 @@ export default function AuthProvider({ children }) {
         })
         .catch((error) => {
           console.error("Error:", error);
+          // TODO I guess we gotta decide how we want this handled
+          // Show a "Toast" and make the user log in again, maybe?
         });
     }
     return null;
