@@ -29,7 +29,7 @@ export default function AuthProvider({ children }) {
       "user-read-private",
       "user-read-email",
     ];
-    const redirectUri = `${process.env.REACT_APP_SYMPHONAI_API_BASE_URL}/callback`;
+    const redirectUri = `${window.location.origin}/callback`;
     const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
     const state = generateRandomString(16);
 
@@ -48,10 +48,29 @@ export default function AuthProvider({ children }) {
     // navigate(origin);
   };
 
-  const handleCallback = (newToken) => {
-    if (newToken) {
+  const handleCallback = async (data) => {
+    // eslint-disable-next-line no-unused-vars
+    const [_key, authCode] = data.queryKey;
+    console.log("Auth code:", authCode);
+    if (authCode) {
       // localStorage.setItem("token", newToken);
-      setToken(newToken);
+      fetch(`${process.env.REACT_APP_SYMPHONAI_API_BASE_URL}/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ code: authCode }),
+      })
+        .then((response) => response.json())
+        .then((responseData) => {
+          console.log("Response data:", responseData);
+          // Continue with further processing or actions based on the "code" value
+          setToken(responseData);
+          return responseData;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     } else {
       // console.error("Access token not found");
     }

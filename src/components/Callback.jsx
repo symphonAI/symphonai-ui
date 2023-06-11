@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
 import { useAuth } from "./AuthProvider";
 
 function Callback() {
@@ -7,22 +8,34 @@ function Callback() {
   const navigate = useNavigate();
   const { onCallback } = useAuth();
 
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const accessToken = searchParams.get("access_token");
+  const searchParams = new URLSearchParams(location.search);
+  const code = searchParams.get("code");
 
-    if (accessToken) {
-      // Handle the access token on the frontend
-      onCallback(accessToken);
-      navigate("/main");
-    } else {
-      // console.error("Access token not found");
-      // Handle the case when the access token is missing or invalid
-      // For example, redirect to an error page or display an error message
+  const { isLoading, isError, data } = useQuery(
+    ["onCallback", code],
+    onCallback,
+    {
+      enabled: !!code, // Only enable the query when code is present
+      retry: false, // Disable automatic retries
     }
-  }, []);
+  );
 
-  return null; // Render nothing or a loading indicator since this component handles the logic internally
+  if (isLoading) {
+    // Render a loading state while the API call is in progress
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    // Handle the error state
+    return <div>Error fetching data</div>;
+  }
+
+  if (data) {
+    navigate("/main");
+  }
+
+  // Render your component using the retrieved data
+  return null;
 }
 
 export default Callback;
