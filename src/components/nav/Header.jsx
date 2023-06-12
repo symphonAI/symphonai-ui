@@ -8,7 +8,8 @@ import { useAuth } from "../AuthProvider";
 import { useDisplay } from "../DisplayController";
 
 export default function Header() {
-  const { token, onLogout } = useAuth();
+  const { loggedIn, onLogout } = useAuth();
+
   const {
     signInModal,
     signUpModal,
@@ -25,18 +26,18 @@ export default function Header() {
           <li>
             <Logo />
           </li>
-          {!token && (
+          {!loggedIn && (
             <li className=" ml-auto">
               <SignIn handleSignIn={showSignInModal} />
             </li>
           )}
 
-          {token && (
+          {loggedIn && (
             <li className="ml-auto hover:underline">
               <NavLink to="/main">Dashboard </NavLink>
             </li>
           )}
-          {token && (
+          {loggedIn && (
             <li className="hover:underline">
               <button onClick={onLogout} type="button">
                 Logout

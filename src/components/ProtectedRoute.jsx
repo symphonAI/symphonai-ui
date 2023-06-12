@@ -4,11 +4,15 @@ import PropTypes from "prop-types";
 import { useAuth } from "./AuthProvider";
 
 function ProtectedRoute({ children }) {
-  const { token } = useAuth();
+  const { checkLogin } = useAuth();
+
   const location = useLocation();
-  if (!token) {
-    return <Navigate to="/" replace state={{from: location}} />;
-  }
+
+  // eslint-disable-next-line no-unused-vars
+  checkLogin().catch((err) => (
+    <Navigate to="/" replace state={{ from: location }} />
+  ));
+
   return children;
 }
 

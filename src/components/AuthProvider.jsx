@@ -1,18 +1,12 @@
-import { React, createContext, useContext, useMemo } from "react";
+import { React, createContext, useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import useLocalStorage from "../hooks/useLocalStorage";
-// import { useDisplay } from "./DisplayController";
 
 const AuthContext = createContext(null);
 
 export default function AuthProvider({ children }) {
-  // const location = useLocation();
+  const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
-
-  const [token, setToken] = useLocalStorage("jwt", "");
-
-  // const { cancelSignInModal, cancelSignUpModal } = useDisplay();
 
   function generateRandomString(length) {
     let text = "";
@@ -44,42 +38,82 @@ export default function AuthProvider({ children }) {
     window.location.href = authorizationUrl;
   };
 
+  const checkLogin = () =>
+    new Promise((resolve, reject) => {
+      console.log("Calling checlLogin()...");
+      fetch(`${process.env.REACT_APP_SYMPHONAI_API_BASE_URL}/test-auth`, {
+        method: "GET",
+        credentials: "include",
+      })
+        .then((response) => {
+          if (response.ok) {
+            setLoggedIn(true);
+            resolve(response.text());
+          } else {
+            setLoggedIn(false);
+            reject(new Error(`HTTP status ${response.status}`));
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+
   const handleCallback = (data) => {
     const [, authCode] = data.queryKey;
     if (authCode) {
-      return fetch(`${process.env.REACT_APP_SYMPHONAI_API_BASE_URL}/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ code: authCode }),
-      })
-        .then((response) => response.text())
-        .then((jwt) => {
-          setToken(jwt);
-          navigate("/main");
+      return (
+        fetch(`${process.env.REACT_APP_SYMPHONAI_API_BASE_URL}/signup`, {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ code: authCode }),
         })
-        .catch((error) => {
-          console.error("Error:", error);
-          // TODO I guess we gotta decide how we want this handled
-          // Show a "Toast" and make the user log in again, maybe?
-        });
+          .then((response) => response.text())
+          // eslint-disable-next-line no-unused-vars
+          .then((_jwt) => {
+            console.log("Navigating...");
+            // Cookie should be set at this point
+            navigate("/main");
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            // TODO I guess we gotta decide how we want this handled
+            // Show a "Toast" and make the user log in again, maybe?
+          })
+      );
     }
     return null;
   };
 
   const handleLogout = () => {
-    setToken("");
+    // Logout replaces the user's valid cookie
+    // with an expired one
+    fetch(`${process.env.REACT_APP_SYMPHONAI_API_BASE_URL}/logout`, {
+      method: "GET",
+      credentials: "include",
+    })
+      // eslint-disable-next-line no-unused-vars
+      .then((_resp) => {
+        navigate("/");
+      })
+      .catch((err) => {
+        console.error("Unable to logout:", err);
+      });
   };
 
   const value = useMemo(
     () => ({
-      token,
+      loggedIn,
+      checkLogin,
+      setLoggedIn,
       onLogin: handleLogin,
       onCallback: handleCallback,
       onLogout: handleLogout,
     }),
-    [token]
+    [loggedIn]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
