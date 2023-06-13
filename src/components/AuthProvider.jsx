@@ -38,9 +38,14 @@ export default function AuthProvider({ children }) {
     window.location.href = authorizationUrl;
   };
 
+  /**
+   * Because the cookie is HTTPOnly, cannot access it through
+   * JavaScript. Therefore the only way to check if the cookie
+   * is valid is to use it to see if it passes the API auth.
+   */
   const checkLogin = () =>
     new Promise((resolve, reject) => {
-      console.log("Calling checlLogin()...");
+      console.log("Calling checkLogin()...");
       fetch(`${process.env.REACT_APP_SYMPHONAI_API_BASE_URL}/test-auth`, {
         method: "GET",
         credentials: "include",
@@ -76,6 +81,9 @@ export default function AuthProvider({ children }) {
           .then((_jwt) => {
             console.log("Navigating...");
             // Cookie should be set at this point
+            // via the API response's "Set-Cookie"
+            // attribute
+            // This happens automatically.
             navigate("/main");
           })
           .catch((error) => {
@@ -90,7 +98,7 @@ export default function AuthProvider({ children }) {
 
   const handleLogout = () => {
     // Logout replaces the user's valid cookie
-    // with an expired one
+    // with an expired one.
     fetch(`${process.env.REACT_APP_SYMPHONAI_API_BASE_URL}/logout`, {
       method: "GET",
       credentials: "include",

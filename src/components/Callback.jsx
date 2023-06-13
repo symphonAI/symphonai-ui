@@ -25,7 +25,6 @@ function Callback() {
     return <div>Error fetching data</div>;
   }
 
-  // Render your component using the retrieved data
   return null;
 }
 
