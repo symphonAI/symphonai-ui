@@ -16,12 +16,10 @@ export default function Home() {
   const searchParams = new URLSearchParams(location.search);
   const code = searchParams.get("code");
 
-  if (code) {
-    useQuery(["onCallback", code], onCallback, {
-      enabled: !!code, // Only enable the query when code is present
-      retry: false, // Disable automatic retries
-    });
-  }
+  useQuery(["onCallback", code], onCallback, {
+    enabled: !!code, // Only enable the query when code is present
+    retry: false, // Disable automatic retries
+  });
 
   useEffect(() => {
     if (!code) {
