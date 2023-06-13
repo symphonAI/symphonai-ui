@@ -21,6 +21,7 @@ export default function Dashboard() {
         `${process.env.REACT_APP_SYMPHONAI_API_BASE_URL}/chatgpt/prompt`,
         {
           method: "POST",
+          credentials: "include",
           // Add any required headers or body data for the POST request
           headers: { "Content-Type": "application/json" },
           // prettier-ignore

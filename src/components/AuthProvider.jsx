@@ -68,7 +68,7 @@ export default function AuthProvider({ children }) {
     const [, authCode] = data.queryKey;
     if (authCode) {
       return (
-        fetch(`${process.env.REACT_APP_SYMPHONAI_API_BASE_URL}/signup`, {
+        fetch(`${process.env.REACT_APP_SYMPHONAI_API_BASE_URL}/login`, {
           method: "POST",
           credentials: "include",
           headers: {
