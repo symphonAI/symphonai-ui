@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useQuery } from "react-query";
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 import mockup from "../image/iphone-mockup.png";
 import { useDisplay } from "../components/DisplayController";
@@ -7,19 +8,34 @@ import { useAuth } from "../components/AuthProvider";
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
-  const { checkLogin } = useAuth();
+  const { checkLogin, onCallback } = useAuth();
   const navigate = useNavigate();
 
+  const location = useLocation();
+
+  const searchParams = new URLSearchParams(location.search);
+  const code = searchParams.get("code");
+
+  if (code) {
+    useQuery(["onCallback", code], onCallback, {
+      enabled: !!code, // Only enable the query when code is present
+      retry: false, // Disable automatic retries
+    });
+  }
+
   useEffect(() => {
-    checkLogin()
-      // eslint-disable-next-line no-unused-vars
-      .then((resp) => navigate("/main"))
-      // eslint-disable-next-line no-unused-vars
-      .catch((err) => {
-        // Not logged in!
-        setLoaded(true);
-      });
-  });
+    if (!code) {
+      console.log("No code: Checking login...");
+      checkLogin()
+        // eslint-disable-next-line no-unused-vars
+        .then((resp) => navigate("/main"))
+        // eslint-disable-next-line no-unused-vars
+        .catch((err) => {
+          // Not logged in!
+          setLoaded(true);
+        });
+    }
+  }, []);
 
   const { showSignInModal } = useDisplay();
 
