@@ -3,15 +3,15 @@ name: SymphonAI UI
 on:
   push:
     branches:
-      - feature/infra
+      - main
   pull_request:
     branches:
-      - feature/infra
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/feature/infra'
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v3
       - name: Set Node.js 16.x
