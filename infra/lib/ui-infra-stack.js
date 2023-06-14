@@ -1,4 +1,4 @@
-const { Stack } = require("aws-cdk-lib");
+const { Stack, Duration } = require("aws-cdk-lib");
 const {
   Bucket,
   BucketEncryption,
@@ -47,6 +47,13 @@ class UIInfraStack extends Stack {
     );
     uiBucket.grantRead(originAccessIdentity);
 
+    const errorResponse = {
+      httpStatus: 404,
+      responseHttpStatus: 200,
+      responsePagePath: "/index.html",
+      ttl: Duration.minutes(0),
+    };
+
     const uiCloudfrontDistribution = new Distribution(
       this,
       "symphonai-ui-cfdistribution",
@@ -60,6 +67,7 @@ class UIInfraStack extends Stack {
           allowedMethods: AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
         },
         domainNames: ["symphon.ai"],
+        errorResponses: [errorResponse],
         certificate: Certificate.fromCertificateArn(
           this,
           "symphonai-ui-cert",
