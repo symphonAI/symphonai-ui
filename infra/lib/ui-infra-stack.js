@@ -11,6 +11,7 @@ const {
   ViewerProtocolPolicy,
   CachePolicy,
   AllowedMethods,
+  OriginAccessIdentity,
 } = require("aws-cdk-lib/aws-cloudfront");
 const { Certificate } = require("aws-cdk-lib/aws-certificatemanager");
 
@@ -33,12 +34,20 @@ class UIInfraStack extends Stack {
       bucketName: "symphon.ai",
     });
 
+    const originAccessIdentity = new OriginAccessIdentity(
+      this,
+      "symphonai-ui-oai"
+    );
+    uiBucket.grantRead(originAccessIdentity);
+
     const uiCloudfrontDistribution = new Distribution(
       this,
       "symphonai-ui-cfdistribution",
       {
         defaultBehavior: {
-          origin: new S3Origin(uiBucket),
+          origin: new S3Origin(uiBucket, {
+            originAccessIdentity,
+          }),
           viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
           cachePolicy: CachePolicy.CACHING_DISABLED,
           allowedMethods: AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
@@ -49,6 +58,7 @@ class UIInfraStack extends Stack {
           "symphonai-ui-cert",
           "arn:aws:acm:us-east-1:349564020337:certificate/36971f14-0cb5-49d0-9a61-a743a637cc1f"
         ),
+        defaultRootObject: "index.html",
       }
     );
   }
