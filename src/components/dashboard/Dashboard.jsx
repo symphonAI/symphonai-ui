@@ -18,7 +18,7 @@ export default function Dashboard() {
     try {
       setLoading(true);
       const response = await fetch(
-        `${process.env.REACT_APP_SYMPHONAI_API_BASE_URL}/chatgpt/prompt`,
+        `${process.env.REACT_APP_SYMPHONAI_API_BASE_URL}/prompt`,
         {
           method: "POST",
           credentials: "include",
