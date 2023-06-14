@@ -23,6 +23,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!code) {
+      // eslint-disable-next-line no-console
       console.log("No code: Checking login...");
       checkLogin()
         // eslint-disable-next-line no-unused-vars

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { React, createContext, useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
@@ -66,6 +67,7 @@ export default function AuthProvider({ children }) {
 
   const handleCallback = (data) => {
     const [, authCode] = data.queryKey;
+    const redirectUri = `${window.location.origin}/`;
     if (authCode) {
       return (
         fetch(`${process.env.REACT_APP_SYMPHONAI_API_BASE_URL}/login`, {
@@ -74,7 +76,7 @@ export default function AuthProvider({ children }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ code: authCode }),
+          body: JSON.stringify({ code: authCode, redirectUri }),
         })
           .then((response) => response.text())
           // eslint-disable-next-line no-unused-vars
