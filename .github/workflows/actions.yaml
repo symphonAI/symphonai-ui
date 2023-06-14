@@ -19,10 +19,8 @@ jobs:
         with:
           node-version: 16.x
       - name: Install node modules for CDK deployment
-        working-directory: ./infra
         run: npm ci
       - name: cdk deploy
-        working-directory: ./infra
         uses: youyo/aws-cdk-github-actions@v2
         with:
           cdk_subcommand: "deploy"
