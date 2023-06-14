@@ -26,7 +26,7 @@ export default function AuthProvider({ children }) {
       "user-read-private",
       "user-read-email",
     ];
-    const redirectUri = `${window.location.origin}/callback`;
+    const redirectUri = `${window.location.origin}/`;
     const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
     const state = generateRandomString(16);
 
