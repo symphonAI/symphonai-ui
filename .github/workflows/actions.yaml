@@ -11,7 +11,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/feature/infra'
+    # if: github.ref == 'refs/heads/feature/infra'
     steps:
       - uses: actions/checkout@v3
       - name: Set Node.js 16.x
@@ -20,12 +20,13 @@ jobs:
           node-version: 16.x
       - name: Install node modules for CDK deployment
         run: npm ci
+        working-directory: ./infra
       - name: cdk deploy
         uses: youyo/aws-cdk-github-actions@v2
         with:
           cdk_subcommand: "deploy"
           cdk_stack: "SymphonAIUIInfraStack"
-          cdk_args: "--require-approval never --verbose"
+          cdk_args: "--app ./infra/bin/infra.js --require-approval never --verbose"
           actions_comment: false
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
