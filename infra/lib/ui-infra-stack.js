@@ -14,6 +14,13 @@ const {
   OriginAccessIdentity,
 } = require("aws-cdk-lib/aws-cloudfront");
 const { Certificate } = require("aws-cdk-lib/aws-certificatemanager");
+const {
+  HostedZone,
+  ARecord,
+  RecordTarget,
+} = require("aws-cdk-lib/aws-route53");
+
+const { CloudFrontTarget } = require("aws-cdk-lib/aws-route53-targets");
 
 class UIInfraStack extends Stack {
   /**
@@ -61,6 +68,23 @@ class UIInfraStack extends Stack {
         defaultRootObject: "index.html",
       }
     );
+
+    const symphonaiHostedZone = HostedZone.fromHostedZoneAttributes(
+      this,
+      "symphonai-hz",
+      {
+        hostedZoneId: "Z0045186G26CSUNVWCC5",
+        zoneName: "symphon.ai",
+      }
+    );
+
+    const symphonaiUIARecord = new ARecord(this, "symphonai-ui-arecord", {
+      zone: symphonaiHostedZone,
+      recordName: "symphon.ai",
+      target: RecordTarget.fromAlias(
+        new CloudFrontTarget(uiCloudfrontDistribution)
+      ),
+    });
   }
 }
 
