@@ -6,7 +6,12 @@ const {
   ObjectOwnership,
 } = require("aws-cdk-lib/aws-s3");
 const { S3Origin } = require("aws-cdk-lib/aws-cloudfront-origins");
-const { Distribution } = require("aws-cdk-lib/aws-cloudfront");
+const {
+  Distribution,
+  ViewerProtocolPolicy,
+  CachePolicy,
+  AllowedMethods,
+} = require("aws-cdk-lib/aws-cloudfront");
 const { Certificate } = require("aws-cdk-lib/aws-certificatemanager");
 
 class UIInfraStack extends Stack {
@@ -34,6 +39,9 @@ class UIInfraStack extends Stack {
       {
         defaultBehavior: {
           origin: new S3Origin(uiBucket),
+          viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+          cachePolicy: CachePolicy.CACHING_DISABLED,
+          allowedMethods: AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
         },
         domainNames: ["symphon.ai"],
         certificate: Certificate.fromCertificateArn(
