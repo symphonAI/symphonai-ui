@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { React, createContext, useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
