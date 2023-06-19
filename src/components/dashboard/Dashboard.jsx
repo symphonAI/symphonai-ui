@@ -27,7 +27,7 @@ export default function Dashboard() {
           // prettier-ignore
           body: JSON.stringify({
           "prompt": prompt,
-          "temperature": temperature,
+          "temperature": temperature.toString(),
           "options": options,
           "accessToken": token,
         }),
