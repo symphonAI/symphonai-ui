@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export default function Playlist({ data, clickClose }) {
-  let { requestUri } = data;
-  requestUri = requestUri.replace("spotify:playlist:", "");
+  let { requestURI } = data;
+  requestURI = requestURI.replace("spotify:playlist:", "");
 
   const uri = [
     "https://open.spotify.com/embed/playlist/",
-    requestUri,
+    requestURI,
     "?utm_source=generator",
   ].join("");
 
