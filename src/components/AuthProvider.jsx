@@ -107,6 +107,7 @@ export default function AuthProvider({ children }) {
     })
       // eslint-disable-next-line no-unused-vars
       .then((_resp) => {
+        setLoggedIn(false);
         navigate("/");
       })
       .catch((err) => {
