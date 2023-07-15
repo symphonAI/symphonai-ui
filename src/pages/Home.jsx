@@ -6,6 +6,7 @@ import mockup from "../image/iphone-mockup.png";
 import { useDisplay } from "../components/DisplayController";
 import { useAuth } from "../components/AuthProvider";
 import Footer from "../components/Footer";
+import LargeLoading from "../components/dashboard/LargeLoading";
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
@@ -71,6 +72,7 @@ export default function Home() {
           </div>
         </div>
       )}
+      {!loaded && <LargeLoading />}
       <Footer />
     </div>
   );
