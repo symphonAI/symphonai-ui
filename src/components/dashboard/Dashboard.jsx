@@ -73,23 +73,18 @@ export default function Dashboard() {
   };
 
   return (
-    <div>
-      <main className="flex flex-col justify-center items-center h-full ">
-        <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 flex lg:flex-row sm:flex-col flex-col justify-center gap-8 mb-10">
-          <InteractiveText text={interactiveText} />
-          {/* eslint-disable-next-line no-nested-ternary */}
-          {data ? (
-            <Playlist data={data} clickClose={handleClickClose} />
-          ) : loading ? (
-            <Loading />
-          ) : (
-            <GptInput
-              onSubmit={handleSubmit}
-              exploreClick={handleExploreClick}
-            />
-          )}
-        </div>
-      </main>
-    </div>
+    <main className="flex flex-col justify-center items-center h-[100%]">
+      <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 flex lg:flex-row sm:flex-col flex-col justify-center gap-8 mb-10">
+        <InteractiveText text={interactiveText} />
+        {/* eslint-disable-next-line no-nested-ternary */}
+        {data ? (
+          <Playlist data={data} clickClose={handleClickClose} />
+        ) : loading ? (
+          <Loading />
+        ) : (
+          <GptInput onSubmit={handleSubmit} exploreClick={handleExploreClick} />
+        )}
+      </div>
+    </main>
   );
 }

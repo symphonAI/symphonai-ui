@@ -29,7 +29,11 @@ export default function SignInModal({ cancelSignInModal }) {
         </button>
         <p className="text-xs">
           Please note that by going through our signin process, you agree to
-          SymphonAI&apos;s <a href="/privacy-policy">Privacy Policy</a>.
+          SymphonAI&apos;s{" "}
+          <a href="/privacy-policy" target="_blank" rel="noopener noreferrer">
+            Privacy Policy
+          </a>
+          .
         </p>
       </div>
     </div>

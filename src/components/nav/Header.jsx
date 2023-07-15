@@ -1,5 +1,4 @@
 import { React } from "react";
-import { NavLink } from "react-router-dom";
 import Logo from "./Logo";
 import SignIn from "./SignIn";
 import SignInModal from "./modal/SignInModal";
@@ -22,23 +21,17 @@ export default function Header() {
   return (
     <>
       <nav>
-        <ul className=" px-4 py-2 flex gap-4 items-center">
+        <ul className="px-4 py-2 flex gap-4 items-center">
           <li>
             <Logo />
           </li>
           {!loggedIn && (
-            <li className=" ml-auto">
+            <li className="ml-auto">
               <SignIn handleSignIn={showSignInModal} />
             </li>
           )}
-
           {loggedIn && (
-            <li className="ml-auto hover:underline">
-              <NavLink to="/main">Dashboard </NavLink>
-            </li>
-          )}
-          {loggedIn && (
-            <li className="hover:underline">
+            <li className="ml-auto">
               <button onClick={onLogout} type="button">
                 Logout
               </button>

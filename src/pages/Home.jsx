@@ -5,6 +5,7 @@ import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 import mockup from "../image/iphone-mockup.png";
 import { useDisplay } from "../components/DisplayController";
 import { useAuth } from "../components/AuthProvider";
+import Footer from "../components/Footer";
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
@@ -41,11 +42,11 @@ export default function Home() {
   return (
     <div>
       {loaded && (
-        <div className=" flex flex-row gap-4">
+        <div className="flex flex-row gap-4 h-80vh">
           <div className=" mt-44 ml-6 flex-1 flex flex-col gap-6">
             <h1 className=" text-6xl font-machina">Introducing symphonAI</h1>
             <p className=" text-2xl">
-              We&apos;re leveraging power of AI to create tailored playlists
+              We&apos;re leveraging the power of AI to create tailored playlists
               that resonate with your emotions and preferences. Our web app
               takes your musical prompts and combines them with your listening
               preferences to create a playlist for you.
@@ -70,6 +71,7 @@ export default function Home() {
           </div>
         </div>
       )}
+      <Footer />
     </div>
   );
 }

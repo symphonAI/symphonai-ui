@@ -59,3 +59,7 @@ body {
   min-height: 400px;
   max-height: 700px;
 }
+
+nav li button:hover {
+  text-decoration: underline;
+}
